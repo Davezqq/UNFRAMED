@@ -1,4 +1,4 @@
-#FOMO:A Fragment-based Objective Molecule Optimization Framework
+# FOMO:A Fragment-based Objective Molecule Optimization Framework
 
 This is the official code for FOMO
 
