@@ -8,22 +8,6 @@ import argparse
 from utils import Molecule_Dataset
 torch.multiprocessing.set_sharing_strategy('file_system')
 device = 'cpu'
-data_file = "data/train_set/Molecule_dataset.txt"
-
-with open(data_file, 'r') as fin:
-	lines = fin.readlines()
-
-shuffle(lines)
-lines = [line.strip('\n') for line in lines]
-N = int(len(lines) * 0.99)
-train_data = lines[:N]
-valid_data = lines[N:]
-
-
-
-training_set = Molecule_Dataset(train_data)
-
-valid_set = Molecule_Dataset(valid_data)
 
 
 def collate_fn(batch_lst):
@@ -41,6 +25,7 @@ if __name__ == '__main__':
 	parser.add_argument('--num_head','-nh', type=int, default=4)
 	parser.add_argument('--num_multi_layers','-nmul', type=int, default=3)
 	parser.add_argument('--learning_rate','-lr', type=int, default=1e-2)
+	parser.add_argument('--data_file', '-data', type=str, default='')
 
 	args = parser.parse_args()
 	# print(args)
@@ -52,9 +37,24 @@ if __name__ == '__main__':
 	num_head = args.num_head
 	num_multi_layers = args.num_multi_layers
 	lr = args.learning_rate
+	data_file = args.data_file
 	data_params = {'batch_size': batch_size,
 	          'shuffle': True,
 	          'num_workers': num_workers}
+
+	with open(data_file, 'r') as fin:
+		lines = fin.readlines()
+
+	shuffle(lines)
+	lines = [line.strip('\n') for line in lines]
+	N = int(len(lines) * 0.99)
+	train_data = lines[:N]
+	valid_data = lines[N:]
+
+	training_set = Molecule_Dataset(train_data)
+
+	valid_set = Molecule_Dataset(valid_data)
+
 	# torch.multiprocessing.set_start_method('spawn')
 	train_generator = DataLoader(training_set, collate_fn = collate_fn, **data_params)
 	valid_generator = DataLoader(valid_set, collate_fn = collate_fn, **data_params)
