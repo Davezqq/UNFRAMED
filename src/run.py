@@ -177,13 +177,13 @@ def parallel_screen(next_set,group_num,oracle_new,start_smiles,population_size,i
 	tp.clear()
 	return new_set,newscore_lst
 
-def optimization_new(start_smiles_lst, cloze_gnn,position_gnn_list, oracle, oracle_num, oracle_name, generations, population_size, result_pkl,group_num,T_warm,parent_dict,sim):
+def optimization_new(start_smiles_lst, cloze_gnn,position_gnn_list, oracle, oracle_name, generations, population_size, result_pkl,group_num,T_warm,parent_dict,sim):
 	p = ParallelPool(ncpus=group_num)
 	logfile = open('tmplog.out','w')
 	logfile.write(f'{cpu_count()}\n')
 	logfile.flush()
 
-	smiles2score = dict() ### oracle_num
+	smiles2score = dict()
 	def oracle_new(smiles,origin_smiles):
 		if smiles not in smiles2score:
 			value = oracle(smiles,origin_smiles)
@@ -243,7 +243,7 @@ def optimization_new(start_smiles_lst, cloze_gnn,position_gnn_list, oracle, orac
 	p.clear()
 
 
-def evaluate_new(oracle_num=1500,oracle_name='qed',generations=10,population_size=20,start_smiles_lst=[],result_pkl='',group_num=8,T_warm=0,sim=0.4):
+def evaluate_new(oracle_name='qed',generations=10,population_size=20,start_smiles_lst=[],result_pkl='',group_num=8,T_warm=0,sim=0.4,position_model_ckpt='',cloze_model_ckpt=''):
 	from rdkit import RDLogger
 	RDLogger.DisableLog('rdApp.*')
 	parent_dict = {}
@@ -282,12 +282,12 @@ def evaluate_new(oracle_num=1500,oracle_name='qed',generations=10,population_siz
 			return (qed(smiles) - qed(smiles_ori))+(drd2(smiles)-drd2(smiles_ori))
 
 	device = 'cpu'
-	position_model_ckpt1 = "PositionModel/save_model/GNN_positionsmodel_1_validloss_0.23958.ckpt"
-	position_gnn1 = Graph_model(nfeat=64, nhid=[256,256, 256, 256], num_head=4, num_multi_layers=3,num_rel_gcn_layers=4,num_edge_types=5,num_linear_layer=4).to(device)
-	position_gnn1.load_state_dict(torch.load(position_model_ckpt1,map_location=device).state_dict())
+	# position_model_ckpt = "PositionModel/save_model/GNN_positionsmodel_1_validloss_0.23958.ckpt"
+	position_gnn1 = torch.load(position_model_ckpt,map_location=device)
+	# position_gnn1.load_state_dict(torch.load(position_model_ckpt1,map_location=device).state_dict())
 
-	cloze_model_ckpt = "save_model/Graph_2_validloss_1.99502.ckpt"
-	gnn = torch.load(cloze_model_ckpt, map_location='cpu')
+	# cloze_model_ckpt = "save_model/Graph_2_validloss_1.99502.ckpt"
+	gnn = torch.load(cloze_model_ckpt, map_location=device)
 	gnn.eval()
 	position_gnn1.eval()
 	# position_gnn2.eval()
@@ -295,7 +295,7 @@ def evaluate_new(oracle_num=1500,oracle_name='qed',generations=10,population_siz
 	for strat_smi in start_smiles_lst:
 		parent_dict[strat_smi]=strat_smi
 
-	optimization_new(start_smiles_lst, gnn,[position_gnn1], oracle, oracle_num, oracle_name,
+	optimization_new(start_smiles_lst, gnn,[position_gnn1], oracle, oracle_name,
 						generations = generations,
 						population_size = population_size,
 						result_pkl = result_pkl,group_num=group_num,T_warm=T_warm,parent_dict=parent_dict,sim=sim)
