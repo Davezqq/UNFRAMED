@@ -13,7 +13,7 @@ Operating systems: Ubuntu 20.04.4 LTS
 
 ## Installation
 Users can download the codes by executing the command:
-<pre><code>git clone https://github.com/Davezqq/FOMO
+<pre><code>git clone https://github.com/Davezqq/UNFRAMED
 </code></pre>
 Downloading may take seconds to minutes according to the quality of the network.
 
