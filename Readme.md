@@ -1,6 +1,6 @@
-# FOMO:A Fragment-based Objective Molecule Optimization Framework
+# UNFRAMED
 
-This is the official code for FOMO
+This is the official code for UNFRAMED
 
 We are cleaning the code and will release it soon.
 ## Requirements 
