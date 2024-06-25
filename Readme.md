@@ -1,8 +1,7 @@
 # UNFRAMED
 
-This is the official code for UNFRAMED
+This is the official code for the Molecule Generation Part of UNFRAMED
 
-We are cleaning the code and will release it soon.
 ## Requirements 
 Operating systems: Ubuntu 20.04.4 LTS  
 - python==3.10.6  
