@@ -251,7 +251,7 @@ def is_valid_mol(mol):
     return True
 
 def smiles2expandfeature_new(smiles,num_nodes = 36 , empty_edge = 5, mask_idx_lst=[],act='append'):
-    # node_degrees = np.zeros(num_nodes, dtype=np.int)
+    # node_degrees = np.zeros(num_nodes, dtype=int)
 
     ### 0. smiles -> mol
     # if not is_valid(smiles,vocabulary1):
@@ -290,8 +290,8 @@ def smiles2expandfeature_new(smiles,num_nodes = 36 , empty_edge = 5, mask_idx_ls
     N = len(idx_lst)
 
     tmp_graph = get_graph(N, 'cpu',vocabulary=vocabulary1)
-    node_degrees = np.zeros(N, dtype=np.int)
-    node_bonds = np.zeros(N, dtype=np.int)
+    node_degrees = np.zeros(N, dtype=int)
+    node_bonds = np.zeros(N, dtype=int)
     # tmp_graph = getcomplete_graph(num_nodes, empty_edge, device='cpu')
     # print('idx_lst in gnn:', idx_lst)
 
@@ -425,8 +425,8 @@ def smiles2feature_position(smiles,device='cuda'):
         idx_lst.append(word2idx(vocabulary2,atom))
     N = len(idx_lst)
     # print('idx_lst out:',idx_lst)
-    node_degrees = np.zeros(N, dtype=np.int)
-    node_bonds = np.zeros(N,dtype=np.int)
+    node_degrees = np.zeros(N, dtype=int)
+    node_bonds = np.zeros(N,dtype=int)
     tmp_graph = get_graph(N, device=device,vocabulary=vocabulary2)
 
     atomidx_2substridx = dict()
@@ -536,7 +536,7 @@ def smiles2feature_train(smiles, device='cpu'):
     N = len(idx_lst)
 
     tmp_graph = get_graph(N, device,vocabulary=vocabulary1)
-    node_degrees = np.zeros(N, dtype=np.int)
+    node_degrees = np.zeros(N, dtype=int)
 
     atomidx_2substridx = dict()
     substructure_lst = clique_lst_new + atom_idx_not_in_rings_list
