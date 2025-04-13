@@ -1,6 +1,6 @@
 # UNFRAMED
 
-This is the official code for the Molecule Generation Part of UNFRAMED.
+UNFRAMED is an unsupervised and fragment-based drug design approach for molecular optimization,  It can specifically generate new molecules with improved drug-like properties based on the input molecule using deep learning models. 
 
 - [Overview](#Overview)
 - [Requirements](#Requirements)
@@ -12,7 +12,7 @@ This is the official code for the Molecule Generation Part of UNFRAMED.
 - [Optimizing](#Optimizing)
 
 ## Overview
-UNFRAMED is an unsupervised and fragment-based drug design approach for molecular optimization,  It can specifically generate new molecules with improved drug-like properties based on the input molecule using deep learning models. 
+UNFRAMED is a fragment-based molecular optimization framework that integrates multi-head attention-based graph models to capture complex interactions between molecular fragments and bonds. It features two core components: the Graph-based Action Prediction Model (GAPM) and the Graph-based Fragment Prediction Model (GFPM), which collaboratively guide molecular modifications. By preserving scaffold similarity, UNFRAMED maintains biological activity or drug-likeness—especially when starting from advanced drug candidates or approved drugs. Designed as an iterative and efficient optimization process, UNFRAMED consistently outperforms baseline methods across various tasks (e.g., QED and PLogP), even when trained on a single dataset.
 
 ## Requirements 
 Operating systems: Ubuntu 20.04.4 LTS  
@@ -47,9 +47,11 @@ The datasets used for testing the performance in different optimization problems
 We designed two different models: GAPM and GFPM, both are used in the process of molecule optimization.   
 The script to train GFPM is located in <code>src/train.py</code>  
 You can run the command to train GFPM as follows:  
-<code>python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data [the path of molecule data]</code>  
+```python
+python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data [the path of molecule data]
+```
 The meaning of the arguments is as follows:  
-- ep: number of epochs  
+- <code>ep</code>: number of epochs  
 - bs: the batch size of training  
 - nw: number of workers used when loading the data  
 - ne: number of the types of edges  
@@ -61,12 +63,16 @@ The meaning of the arguments is as follows:
 
 The script to train GAPM is located in <code>src/PositionModel/train.py</code>  
 You can run the command to train GFPM as follows:  
-<code>python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data [the path of molecule data]</code>  
+```python
+python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data [the path of molecule data]
+```
 
 ## Optimizing
 The script for molecule optimization is located in  <code>src/batch_evaluate.py</code>   
 You can run the command to optimize the molecules:  
-<code>python3 batch_evaluate.py -dir [path of result files] -smi [path of test files] -ng 5 -oracle qed -gen 5 -pop 5 -sim 0.6 -clo_path [the path of pretrained GFPM] -pos_path [the path of pretrained GAPM]</code>  
+```python
+python3 batch_evaluate.py -dir [path of result files] -smi [path of test files] -ng 5 -oracle qed -gen 5 -pop 5 -sim 0.6 -clo_path [the path of pretrained GFPM] -pos_path [the path of pretrained GAPM]
+```
 The meaning of the arguments is as follows:
 - dir: The path of result files 
 - smi: The path of test files
