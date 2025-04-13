@@ -26,7 +26,7 @@ class Graph_model(nn.Module):
         self.vocabulary_size = len(vocabulary)
 
         self.Atom_embedding = nn.Embedding(num_embeddings=self.vocabulary_size + 1, embedding_dim=nfeat,
-                                           padding_idx=self.vocabulary_size)
+                                           padding_idx=0)
         self.Bond_embedding = nn.Embedding(num_embeddings=self.num_edge_types + 1, embedding_dim=nfeat,
                                            padding_idx=self.num_edge_types)
 
@@ -58,7 +58,7 @@ class Graph_model(nn.Module):
                                                                                 out_features=linear_nhid[i]))
 
             self.LN_seq.add_module(name=f'LN_{i}', module=nn.LayerNorm(normalized_shape=linear_nhid[i]))
-        self.out_fc = nn.Linear(linear_nhid[-1], 4)
+        self.out_fc = nn.Linear(linear_nhid[-1], self.vocabulary_size+1)
         self.opt = torch.optim.SGD(self.parameters(), lr=self.lr)
         self.criteria = torch.nn.CrossEntropyLoss(ignore_index=0)
 

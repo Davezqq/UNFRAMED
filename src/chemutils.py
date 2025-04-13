@@ -164,7 +164,7 @@ def ith_substructure_is_atom(vocabulary,i):
 
 def word2idx(vocabulary,word):
     # print(word)
-    return vocabulary.index(word)
+    return vocabulary.index(word)+1
 
 
 
@@ -532,7 +532,7 @@ def smiles2feature_train(smiles, device='cpu'):
     for atom in atom_symbol_not_in_rings_list:
         idx_lst.append(word2idx(vocabulary1,atom))
 
-    d = len(vocabulary1)
+    d = len(vocabulary1)+1
     N = len(idx_lst)
 
     tmp_graph = get_graph(N, device,vocabulary=vocabulary1)
@@ -595,10 +595,10 @@ def smiles2feature_train(smiles, device='cpu'):
     mask_atom_idx = np.random.choice(not_ring_idx_lst, num_choice_atom, replace=False)
     mask_atom_idx = list(mask_atom_idx)
     mask_idx = mask_ring_idx+mask_atom_idx
-    label = torch.ones(N, dtype=torch.long) * d
+    label = torch.zeros(N, dtype=torch.long)
     for i, v in enumerate(idx_lst):
         if i in mask_idx:
-            tmp_graph.ndata['atom_type'][i] = d
+            tmp_graph.ndata['atom_type'][i] = 0
             label[i] = v
         else:
             tmp_graph.ndata['atom_type'][i] = v
