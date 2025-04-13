@@ -68,6 +68,7 @@ def optimize_one_smile_new(smiles,cloze_gnn,position_gnn_lst,parent_dict,sim_thr
 		graph, N,node_degrees,node_bonds = smiles2feature_position(ele_smiles, device='cpu')
 
 		graph = graph[0]
+		graph = graph.to('cuda')
 		pred_pos = None
 		# print(position_gnn_lst)
 		for position_gnn in position_gnn_lst:
@@ -114,10 +115,6 @@ def optimize_one_smile_new(smiles,cloze_gnn,position_gnn_lst,parent_dict,sim_thr
 
 		# print(len(to))
 		for smi in smiles_set:
-			# # print(type(parent_dict))
-			# if smi in parent_dict:
-			# 	total_set.remove(smi)
-			# else:
 			parent_dict[smi] = parent_dict[ele_smiles]
 	orimol = None
 	total_set_new = set()
@@ -146,7 +143,6 @@ def parallel_screen(next_set,group_num,oracle_new,start_smiles,population_size,i
 		else:
 			tmpgroup = next_set[i * num_per_group:len(next_set)]
 		groups.append(tmpgroup)
-	print(len(groups[0]))
 	oracle_new_lst = [oracle_new]*group_num
 	# print(len(next_set))
 	parent_dict_lst = [parent_dict] * group_num
@@ -156,9 +152,7 @@ def parallel_screen(next_set,group_num,oracle_new,start_smiles,population_size,i
 	iteration_lst = [iteration]*group_num
 	T_warm_lst = [T_warm]*group_num
 	sim_lst = [sim]*group_num
-	# print('start')
 	result_set = tp.amap(oracle_screening_return_set, groups, oracle_new_lst,start_smiles_lst,population_size_lst,iteration_lst,T_warm_lst,parent_dict_lst,score_dict_lst,sim_lst)
-	# oracle_screening_return_set(smiles_set, oracle, baseline, origin_smi, N=20, iteration=0, T_warm=3)
 	while not result_set.ready():
 		time.sleep(1)
 		print(".", end=' ')
@@ -178,7 +172,6 @@ def parallel_screen(next_set,group_num,oracle_new,start_smiles,population_size,i
 	return new_set,newscore_lst
 
 def optimization_new(start_smiles_lst, cloze_gnn,position_gnn_list, oracle, oracle_name, generations, population_size, result_pkl,group_num,T_warm,parent_dict,sim):
-	p = ParallelPool(ncpus=group_num)
 	logfile = open('tmplog.out','w')
 	logfile.write(f'{cpu_count()}\n')
 	logfile.flush()
@@ -213,13 +206,14 @@ def optimization_new(start_smiles_lst, cloze_gnn,position_gnn_list, oracle, orac
 		parent_lst = []
 		for i in range(group_num):
 			parent_lst.append(parent_dict)
-
-		smiles_set_lst = p.amap(optimize_one_smile_new,groups,cloze_gnn_lst,position_gnn_lst,parent_lst,sim_lst)
-		while not smiles_set_lst.ready():
-			time.sleep(1)
-			print(".", end=' ')
-		# print(len(parent_dict))
-		smiles_set_lst = smiles_set_lst.get()
+		# with ParallelPool(ncpus=group_num) as p:
+		# 	smiles_set_lst = p.amap(optimize_one_smile_new,groups,cloze_gnn_lst,position_gnn_lst,parent_lst,sim_lst)
+		smiles_set_lst = optimize_one_smile_new(current_list,cloze_gnn,position_gnn_lst[0],parent_dict,sim)
+		# while not smiles_set_lst.ready():
+		# 	time.sleep(1)
+		# 	print(".", end=' ')
+		smiles_set_lst = [smiles_set_lst]
+		# p.clear()
 
 		for sub_set in smiles_set_lst:
 			next_set = next_set.union(sub_set[0])
@@ -240,7 +234,6 @@ def optimization_new(start_smiles_lst, cloze_gnn,position_gnn_list, oracle, orac
 		logfile.write(f'{smiles_score_lst[:5]},Oracle num, {len(existing_set)}\n')
 		logfile.flush()
 	pickle.dump(existing_set, open(result_pkl, 'wb'))
-	p.clear()
 
 
 def evaluate_new(oracle_name='qed',generations=10,population_size=20,start_smiles_lst=[],result_pkl='',group_num=8,T_warm=0,sim=0.4,position_model_ckpt='',cloze_model_ckpt=''):
@@ -281,12 +274,9 @@ def evaluate_new(oracle_name='qed',generations=10,population_size=20,start_smile
 		def oracle(smiles,smiles_ori):
 			return (qed(smiles) - qed(smiles_ori))+(drd2(smiles)-drd2(smiles_ori))
 
-	device = 'cpu'
-	# position_model_ckpt = "PositionModel/save_model/GNN_positionsmodel_1_validloss_0.23958.ckpt"
+	device = 'cuda'
 	position_gnn1 = torch.load(position_model_ckpt,map_location=device)
-	# position_gnn1.load_state_dict(torch.load(position_model_ckpt1,map_location=device).state_dict())
 
-	# cloze_model_ckpt = "save_model/Graph_2_validloss_1.99502.ckpt"
 	gnn = torch.load(cloze_model_ckpt, map_location=device)
 	gnn.eval()
 	position_gnn1.eval()

@@ -1,0 +1,132 @@
+accelerate==0.33.0
+aiobotocore==2.21.1
+aiohappyeyeballs==2.6.1
+aiohttp==3.11.16
+aioitertools==0.12.0
+aiosignal==1.3.2
+anndata==0.11.4
+annotated-types==0.7.0
+array_api_compat==1.11.2
+asttokens==3.0.0
+async-timeout==5.0.1
+attrs==25.3.0
+beautifulsoup4==4.13.3
+botocore==1.37.1
+Brotli @ file:///croot/brotli-split_1736182456865/work
+cellxgene-census==1.15.0
+certifi @ file:///croot/certifi_1738623731865/work/certifi
+chardet @ file:///home/conda/feedstock_root/build_artifacts/chardet_1741797914774/work
+charset-normalizer @ file:///croot/charset-normalizer_1721748349566/work
+comm==0.2.2
+contourpy @ file:///home/conda/feedstock_root/build_artifacts/contourpy_1731428322366/work
+cycler @ file:///home/conda/feedstock_root/build_artifacts/cycler_1733332471406/work
+dataclasses==0.6
+datasets==2.19.2
+decorator==5.2.1
+dgl==0.9.1.post1
+dill @ file:///croot/dill_1715094664823/work
+et_xmlfile==2.0.0
+evaluate==0.4.2
+exceptiongroup==1.2.2
+executing==2.2.0
+filelock==3.18.0
+fonttools @ file:///home/conda/feedstock_root/build_artifacts/fonttools_1743732186120/work
+freetype-py @ file:///home/conda/feedstock_root/build_artifacts/freetype-py_1650983368720/work
+frozenlist==1.5.0
+fsspec==2024.3.1
+fuzzywuzzy==0.18.0
+gget==0.29.0
+greenlet @ file:///home/conda/feedstock_root/build_artifacts/greenlet_1734532786161/work
+h5py==3.13.0
+huggingface-hub==0.30.2
+idna @ file:///croot/idna_1714398848350/work
+ipython==8.35.0
+ipywidgets==8.1.6
+jedi==0.19.2
+jmespath==1.0.1
+joblib==1.4.2
+jupyterlab_widgets==3.0.14
+kiwisolver @ file:///home/conda/feedstock_root/build_artifacts/kiwisolver_1725459213453/work
+legacy-api-wrap==1.4.1
+llvmlite==0.44.0
+lxml==5.3.2
+matplotlib==3.10.1
+matplotlib-inline==0.1.7
+mkl-service==2.4.0
+mkl_fft @ file:///io/mkl313/mkl_fft_1730824109137/work
+mkl_random @ file:///io/mkl313/mkl_random_1730823916628/work
+multidict==6.4.3
+multiprocess @ file:///croot/multiprocess_1692294385131/work
+munkres==1.1.4
+mysql-connector-python==9.2.0
+natsort==8.4.0
+networkx @ file:///croot/networkx_1737039604450/work
+numba==0.61.2
+numpy @ file:///croot/numpy_and_numpy_base_1708638617955/work/dist/numpy-1.26.4-cp310-cp310-linux_x86_64.whl#sha256=d8cd837ed43e87f77e6efaa08e8de927ca030a1c9c5d04624432d6fb9a74a5ee
+openpyxl==3.1.5
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1733203243479/work
+pandas @ file:///home/conda/feedstock_root/build_artifacts/pandas_1744430447393/work
+parso==0.8.4
+pathos @ file:///croot/pathos_1692343065162/work
+patsy==1.0.1
+pexpect==4.9.0
+pillow @ file:///croot/pillow_1738010226202/work
+pox @ file:///croot/pox_1692111202272/work
+ppft @ file:///croot/ppft_1692111205534/work
+prompt_toolkit==3.0.50
+propcache==0.3.1
+psutil @ file:///croot/psutil_1736367091698/work
+ptyprocess==0.7.0
+pure_eval==0.2.3
+pyarrow==19.0.1
+pyarrow-hotfix==0.6
+pycairo==1.25.0
+pydantic==2.11.3
+pydantic_core==2.33.1
+Pygments==2.19.1
+pynndescent==0.5.13
+pyparsing @ file:///home/conda/feedstock_root/build_artifacts/pyparsing_1743089729650/work
+PySocks @ file:///home/builder/ci_310/pysocks_1640793678128/work
+pytdc==1.1.15
+python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1733215673016/work
+pytz @ file:///home/conda/feedstock_root/build_artifacts/pytz_1742920838005/work
+PyYAML==6.0.2
+rdkit==2023.9.6
+regex==2024.11.6
+reportlab @ file:///home/conda/feedstock_root/build_artifacts/reportlab_1739375622146/work
+requests @ file:///croot/requests_1730999120400/work
+rlPyCairo @ file:///home/conda/feedstock_root/build_artifacts/rlpycairo_1687519531733/work
+s3fs==2024.3.1
+safetensors==0.5.3
+scanpy==1.11.1
+scikit-learn==1.5.2
+scipy @ file:///croot/scipy_1743153247252/work/dist/scipy-1.15.2-cp310-cp310-linux_x86_64.whl#sha256=89cede43d4ba858f9d38b2cbe78d9e0c7a876a008ce203d7ce26f74c11a69868
+seaborn==0.13.2
+session-info2==0.1.2
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1733380938961/work
+somacore==1.0.11
+soupsieve==2.6
+SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/sqlalchemy_1743109639410/work
+stack-data==0.6.3
+statsmodels==0.14.4
+threadpoolctl==3.6.0
+tiledb==0.29.1
+tiledbsoma==1.11.4
+tokenizers==0.21.1
+torch==1.12.1
+torchaudio==0.12.1
+torchvision==0.13.1
+tqdm @ file:///croot/tqdm_1738943501192/work
+traitlets==5.14.3
+transformers==4.50.3
+typing-inspection==0.4.0
+typing_extensions @ file:///croot/typing_extensions_1734714854207/work
+tzdata @ file:///home/conda/feedstock_root/build_artifacts/python-tzdata_1742745135198/work
+umap-learn==0.5.7
+unicodedata2 @ file:///home/conda/feedstock_root/build_artifacts/unicodedata2_1736692496989/work
+urllib3 @ file:///croot/urllib3_1737133630106/work
+wcwidth==0.2.13
+widgetsnbextension==4.0.14
+wrapt==1.17.2
+xxhash==3.5.0
+yarl==1.19.0

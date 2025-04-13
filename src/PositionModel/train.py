@@ -44,7 +44,7 @@ if __name__ == '__main__':
 	parser.add_argument('--dim_of_feat', '-feat', type=int, default=64)
 	parser.add_argument('--num_head', '-nh', type=int, default=4)
 	parser.add_argument('--num_multi_layers', '-nmul', type=int, default=3)
-	parser.add_argument('--learning_rate', '-lr', type=int, default=1e-2)
+	parser.add_argument('--learning_rate', '-lr', type=float, default=1e-2)
 	parser.add_argument('--data_file', '-data', type=str, default='../data/train_set/Molecule_dataset.txt')
 
 	args = parser.parse_args()

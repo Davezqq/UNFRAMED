@@ -260,8 +260,8 @@ def smiles2feature_train(smiles, device='cuda',flag=0):
     for atom in atom_symbol_not_in_rings_list:
         idx_lst.append(word2idx(atom))
     N = len(idx_lst)
-    node_degrees = np.zeros(N, dtype=np.int)
-    node_bonds = np.zeros(N, dtype=np.int)
+    node_degrees = np.zeros(N, dtype=int)
+    node_bonds = np.zeros(N, dtype=int)
     tmp_graph = getcomplete_graph(N, device=device)
 
     atomidx_2substridx = dict()

@@ -35,7 +35,7 @@ if __name__ == "__main__":
     parser.add_argument('--Twarm', '-Twarm', type=int, default=0)
     parser.add_argument('--generation', '-gen', type=int, default=5)
     parser.add_argument('--population_size', '-pop', type=int, default=5)
-    parser.add_argument('--sim_cons', '-sim', type=int, default=0.6)
+    parser.add_argument('--sim_cons', '-sim', type=float, default=0.6)
     parser.add_argument('--cloze_model_path', '-clo_path', type=str, default='save_model/Graph_2_validloss_1.99502.ckpt')
     parser.add_argument('--position_model_ckpt', '-pos_path', type=str, default='PositionModel/save_model/GNN_positionsmodel_1_validloss_0.23958.ckpt')
 

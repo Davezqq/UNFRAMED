@@ -18,7 +18,7 @@ val_dict = pickle.load(f)
 # print(pkl_file)
 
 def select_valid_atom(graph,node_degree):
-    node_types = graph.ndata['atom_type'].numpy().tolist()
+    node_types = graph.ndata['atom_type'].cpu().numpy().tolist()
     # print(node_types)
     ab_append = []
     for idx, node_type in enumerate(node_types):
@@ -370,6 +370,7 @@ def smiles2expandfeature_new(smiles,num_nodes = 36 , empty_edge = 5, mask_idx_ls
     for mask_idx in mask_idx_lst:
         if act=='alter':
             tmp_graph_copy = tmp_graph.clone()
+            tmp_graph_copy = tmp_graph_copy.to('cuda')
             origin_word_id = tmp_graph_copy.ndata['atom_type'][mask_idx].item()
             tmp_graph_copy.ndata['atom_type'][mask_idx] = d
             feature_lst.append((tmp_graph_copy,mask_idx,node_bonds[mask_idx],origin_word_id))
@@ -378,10 +379,11 @@ def smiles2expandfeature_new(smiles,num_nodes = 36 , empty_edge = 5, mask_idx_ls
             # bond_type = np.random.choice([i for i in range(empty_edge-1)], 1, replace=False)[0]
             # print(tmp_graph)
             tmp_graph_copy = tmp_graph.clone()
+            tmp_graph_copy = tmp_graph_copy.to('cuda')
             tmp_graph_copy.add_nodes(num=1)
             tmp_graph_copy.ndata['atom_type'][N] = d
             # print(torch.tensor([mask_idx, N]))
-            tmp_graph_copy.add_edges(u=torch.tensor([mask_idx, N]),v=torch.tensor([N,mask_idx]),data={'bond_type': torch.tensor([bond_type,bond_type])})
+            tmp_graph_copy.add_edges(u=torch.tensor([mask_idx, N]).cuda(),v=torch.tensor([N,mask_idx]).cuda(),data={'bond_type': torch.tensor([bond_type,bond_type]).cuda()})
             # new_adj_mat[idx,N] = 1
             # new_adj_mat[N,idx] = 1
             feature_lst.append((tmp_graph_copy, N, mask_idx, bond_type))
