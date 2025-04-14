@@ -6,10 +6,12 @@ UNFRAMED is an unsupervised and fragment-based drug design approach for molecula
 - [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Data Organization](#Data-Organization)
-  
     - [Train_set](#Train_set)
     - [Test_set](#Test_set)
+    - [Using your own dataset to train the models](#Using_your_own_dataset_to_train_the_models)
 - [Training](#Training)
+  - [Training of GFPM](#Training_of_GFPM)
+  - [Training of GAPM](#Training_of_GAPM)
 - [Optimizing](#Optimizing)
 
 ## Overview
