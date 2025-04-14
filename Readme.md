@@ -103,6 +103,11 @@ The meaning of the arguments is as follows:
 - <code>lr</code>: learning rate  
 - <code>data</code>: the path of molecule data file
 
+Example：
+```python
+python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data data/train_set/Molecule_dataset.txt
+```
+
 Expected output:
 
 The trained model will be saved at <code>src/save_model</code>
@@ -110,13 +115,25 @@ The trained model will be saved at <code>src/save_model</code>
 ### Training of GAPM
 The script to train GAPM is located in <code>src/PositionModel/train.py</code>  
 
-You can run the command to train GAPM as follows:  
+You can run the commands to train GAPM as follows:  
 ```python
+cd src/PositionModel
 python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data [the path of molecule data]
 ```
+The arguments are the same as GFPM.
+
+Example:
+```python
+python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data data/train_set/Molecule_dataset.txt
+```
+
+Expected output:
+
+The trained model will be saved at <code>src/PositionModel/save_model</code>
 
 ## Optimizing
 The script for molecule optimization is located in  <code>src/batch_evaluate.py</code>   
+
 You can run the command to optimize the molecules:  
 ```python
 python3 batch_evaluate.py -dir [path of result files] -smi [path of test files] -ng 5 -oracle qed -gen 5 -pop 5 -sim 0.6 -clo_path [the path of pretrained GFPM] -pos_path [the path of pretrained GAPM]
@@ -131,3 +148,44 @@ The meaning of the arguments is as follows:
 - sim: the constraint of similarity 
 - clo_path: the path of pretrained GFPM model  
 - pos_path: the path of pretrained GAPM model
+  
+Example:
+```python
+python batch_evaluate.py -dir ../result/test_opt -smi data/test_set/qed/test.txt -ng 5 -oracle qed -gen 5 -pop 5 -sim 0.6 -clo_path save_model/GFPM.ckpt -pos_path PositionModel/save_model/GAPM.ckpt 
+```
+
+Expected output:
+The results of generated molecules are outputed at the result directory(specified by parameter -dir). The file structure will be:
+```
+.
+├── 0.pkl
+├── 1.pkl
+├── 2.pkl
+...
+├── logfile.txt
+```
+
+<code>x.pkl</code>files contains the generated molecules for each input molecule, <code>x</code> is the id of it.
+<code>logfile.txt</code> file contains the log of the optimization program.
+
+Using your own data for optimization:
+
+In the example, we provided how to run the optimization program on the prepared datasets. If you want to use UNFRAMED to optimize your own molecule, all you need to do is to prepare a file that contains the smiles of the molecules. And each line contains only one smiles.
+For example: 
+```
+CC(=O)NCCNC(=O)c1cnn(-c2ccc(C)c(Cl)c2)c1C1CC1
+C[C@@H](C(=O)C1=c2ccccc2=[NH+]C1)[NH+]1CCC[C@@H]1[C@@H]1CC=CS1
+CCN(C[C@@H]1CCOC1)C(=O)c1ccnc(Cl)c1
+Cc1ccccc1C[S@](=O)CCCc1ccccc1
+CSCC(=O)NNC(=O)c1c(O)cc(Cl)cc1Cl
+c1ccc(-c2cc(N3C[C@H]4[C@@H]5CC[C@@H](O5)[C@H]4C3)c3ccccc3[nH+]2)cc1
+Cc1cc(CNC(=O)Nc2cc(-c3ccccc3)on2)no1
+Cc1ccn2c(=O)c(C(=O)Nc3n[n-]c(C(F)(F)F)n3)cnc2c1
+CN(Cc1ccncc1)C(=O)c1ccc(I)cc1
+COc1ccccc1N1CCN(c2ccc(=O)n(CC(=O)NC3CC3)n2)CC1
+COC(=O)Cn1nc(C)c(CNc2ncnc3sccc23)c1C
+```
+
+
+
+
