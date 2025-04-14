@@ -17,11 +17,18 @@ UNFRAMED is a fragment-based molecular optimization framework that integrates mu
 
 ## Requirements 
 Operating systems: Ubuntu 20.04.4 LTS  
-- python==3.10.6  
+- python==3.10
 - pytorch==1.12.1  
-- rdkit==2022.9.1  
-- dgl-cuda11.3==0.9.1  
-- pandas==1.5.3
+- rdkit==2023.9.6  
+- dgl-cuda11.3==0.9.1
+
+Environment Installation:
+You can create the environment and install all the dependencies by running following commands:
+```
+conda create -n unframed python=3.10
+conda activate unframed
+pip install -r requirements.txt
+```
 
 ## Installation
 Users can download the codes by executing the command:
@@ -60,7 +67,23 @@ If you want to use your own dataset to train GFPM and GAPM, you only need to fol
    CS(=O)(=O)c1ccc(Sc2nc3ccccc3cc2[N+](=O)[O-])cc1
    Cc1cc(C)c(C#N)c(SCc2nc3ccc(Cl)cc3c(=O)[nH]2)n1  
    ```
-2. **Constructing a vocabulary based on your molecules**, 
+2. **Constructing a vocabulary based on your molecules**, you can run the <code>vocabulary.py</code> file to generate the vocabulary file, the command is as follows:
+   ```python
+   python vocabulary.py -d [data path] -th [threshold]
+   ```
+   The meaning of the arguments is as follows:
+   - <code>d</code>: the path of your smiles file
+   - <code>th</code>: threshold, the output vocabulary only reserves the fragments show up more than the threshold.
+     
+   example:
+   ```python
+   python vocabulary.py -d data/new_set/Molecule_dataset.txt -th 1000
+   ```
+  There will be two expected output files at the same directory:
+  - <code>all_structures.txt</code>: This file contains all the smiles of the fragments extracted from given dataset.
+  - <code>vocabulary.txt</code>: This file contains the screened fragments vocabulary based on the threshold.
+   
+   
    
   
 ## Training
