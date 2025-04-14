@@ -1,7 +1,7 @@
 # UNFRAMED
 
 UNFRAMED is an unsupervised and fragment-based drug design approach for molecular optimization,  It can specifically generate new molecules with improved drug-like properties based on the input molecule using deep learning models. 
-
+![Overview](https://github.com/Davezqq/UNFRAMED/blob/main/UNFRAMED_overview.png)
 - [Overview](#Overview)
 - [Requirements](#Requirements)
 - [Installation](#Installation)
