@@ -82,29 +82,34 @@ If you want to use your own dataset to train GFPM and GAPM, you only need to fol
   There will be two expected output files at the same directory:
   - <code>all_structures.txt</code>: This file contains all the smiles of the fragments extracted from given dataset.
   - <code>vocabulary.txt</code>: This file contains the screened fragments vocabulary based on the threshold.
-   
-   
-   
   
-## Training
-We designed two different models: GAPM and GFPM, both are used in the process of molecule optimization.   
-The script to train GFPM is located in <code>src/train.py</code>  
+## Training 
+We designed two different models: GAPM and GFPM, both are used in the process of molecule optimization.  
+
+### Training of GFPM
+The script to train GFPM is located in <code>src/train.py</code>.
 You can run the command to train GFPM as follows:  
 ```python
 python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data [the path of molecule data]
 ```
 The meaning of the arguments is as follows:  
 - <code>ep</code>: number of epochs  
-- bs: the batch size of training  
-- nw: number of workers used when loading the data  
-- ne: number of the types of edges  
-- feat: the dimensions of the feature vectors  
-- nh: number of heads in RelMAL layers  
-- nmul: number of RelMAL layers  
-- lr: learning rate  
-- data: the path of molecule data file
+- <code>bs</code>: the batch size of training  
+- <code>nw</code>: number of workers used when loading the data  
+- <code>ne</code>: number of the types of edges  
+- <code>feat</code>: the dimensions of the feature vectors  
+- <code>nh</code>: number of heads in RelMAL layers  
+- <code>nmul</code>: number of RelMAL layers  
+- <code>lr</code>: learning rate  
+- <code>data</code>: the path of molecule data file
 
+Expected output:
+
+The trained model will be saved at <code>src/save_model</code>
+
+### Training of GAPM
 The script to train GAPM is located in <code>src/PositionModel/train.py</code>  
+
 You can run the command to train GAPM as follows:  
 ```python
 python3 train.py -ep 200 -bs 128 -nw 5 -ne 5 -feat 64 -nh 4 -nmul 4 -lr 1e-2 -data [the path of molecule data]
